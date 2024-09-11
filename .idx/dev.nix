@@ -1,29 +1,45 @@
+# To learn more about how to use Nix to configure your environment
+# see: https://developers.google.com/idx/guides/customize-idx-env
 { pkgs }: {
-  channel = "stable-23.11";
+  # Which nixpkgs channel to use.
+  channel = "stable-23.11"; # or "unstable"
+  # Use https://search.nixos.org/packages to find packages
   packages = [
     pkgs.php82
     pkgs.php82Packages.composer
     pkgs.nodejs_20
-    pkgs.mysql80
+    pkgs.postgresql_16
   ];
-  idx.extensions = [
-    "svelte.svelte-vscode"
-    "vue.volar"
-  ];
-  idx.previews = {
+  # Sets environment variables in the workspace
+  env = { };
+  idx = {
+    # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
+    extensions = [
+      # "vscodevim.vim"
+    ];
+    workspace = {
+      # Runs when a workspace is first created with this `dev.nix` file
+      onCreate = {
+        # Example: install JS dependencies from NPM
+        composer-install = "composer install";
+        npm-install = "npm install";
+        # npm-install = "npm install";
+        # Open editors for the following files by default, if they exist:
+        default.openFiles = [ "README.md" ];
+      };
+      # To run something each time the workspace is (re)started, use the `onStart` hook
+      onStart = {
+        init-postgres-lockfolder = "mkdir /run/postgresql";
+      };
+    };
+    # Enable previews and customize configuration
     previews = {
-      web = {
-        command = [
-          "npm"
-          "run"
-          "dev"
-          "--"
-          "--port"
-          "$PORT"
-          "--host"
-          "0.0.0.0"
-        ];
-        manager = "web";
+      enable = true;
+      previews = {
+        web = {
+          command = [ "php" "artisan" "serve" "--port" "$PORT" "--host" "0.0.0.0" ];
+          manager = "web";
+        };
       };
     };
   };
