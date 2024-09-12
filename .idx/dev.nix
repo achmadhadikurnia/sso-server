@@ -23,9 +23,9 @@
         # Example: install JS dependencies from NPM
         npm-install = "npm install";
         composer-create-project = "composer create-project";
-        init-postgres-db = "initdb -D .idx/.postgres -U postgres";
-        init-postgres-lockfolder = "mkdir /run/postgresql";
-        run-postgres-db = "/usr/bin/pg_ctl -D .idx/.postgres -l .idx/.postgres/logfile start";
+        # init-postgres-db = "initdb -D .idx/.postgres -U postgres";
+        # init-postgres-lockfolder = "mkdir /run/postgresql";
+        # run-postgres-db = "/usr/bin/pg_ctl -D .idx/.postgres -l .idx/.postgres/logfile start";
         # Open editors for the following files by default, if they exist:
         default.openFiles = [ "README.md" ];
       };
