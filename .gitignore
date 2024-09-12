@@ -1,3 +1,4 @@
+/.idx/.postgres
 /.phpunit.cache
 /node_modules
 /public/build
