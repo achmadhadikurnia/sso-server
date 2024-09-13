@@ -8,8 +8,11 @@
     pkgs.php82
     pkgs.php82Packages.composer
     pkgs.nodejs_20
-    pkgs.postgresql_16
   ];
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+  };
   # Sets environment variables in the workspace
   env = { };
   idx = {
@@ -21,12 +24,7 @@
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
         # Example: install JS dependencies from NPM
-        npm-install = "npm install";
-        composer-create-project = "composer create-project";
-        # init-postgres-db = "initdb -D .idx/.postgres -U postgres";
-        # init-postgres-lockfolder = "mkdir /run/postgresql";
-        # run-postgres-db = "/usr/bin/pg_ctl -D .idx/.postgres -l .idx/.postgres/logfile start";
-        # Open editors for the following files by default, if they exist:
+        # npm-install = "npm install";
         default.openFiles = [ "README.md" ];
       };
       # To run something each time the workspace is (re)started, use the `onStart` hook
